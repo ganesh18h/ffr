@@ -866,6 +866,39 @@ nav.visible{transform:translateY(0);}
   .collab-action-btn{width:100%;}
 }
 
+.collab-image-box{cursor:pointer;text-decoration:none;}
+.collab-btn-group{display:flex;align-items:center;gap:12px;}
+.collab-book-btn{
+  display:inline-block;text-decoration:none;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red2) 100%);
+  border-color:var(--red2);color:#fff;
+  box-shadow:0 0 18px rgba(230,32,32,0.45);
+}
+.collab-book-btn:hover{background:var(--gold);border-color:var(--gold);color:#050505;}
+.collab-skip-btn{
+  background:none;border:none;color:rgba(232,228,216,0.55);
+  font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:0.15em;
+  text-transform:uppercase;cursor:pointer;padding:8px 4px;transition:color 0.2s;
+}
+.collab-skip-btn:hover{color:var(--gold);}
+@media(max-width:600px){
+  .collab-btn-group{flex-direction:column-reverse;width:100%;gap:4px;}
+  .collab-book-btn{width:100%;text-align:center;}
+}
+
+.collab-slider{display:block;height:min(58vh,440px);max-height:none;}
+.collab-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.5s ease;}
+.collab-slide.active{opacity:1;pointer-events:all;}
+.collab-slider .collab-poster-img{width:100%;height:100%;max-height:none;object-fit:contain;}
+.collab-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:4;}
+.collab-dot{width:9px;height:9px;padding:0;border-radius:50%;border:1px solid var(--gold);background:rgba(0,0,0,0.5);cursor:pointer;transition:all 0.25s;}
+.collab-dot.active{background:var(--gold);box-shadow:0 0 8px rgba(200,168,75,0.8);}
+.collab-slide{overflow:hidden;}
+.collab-slide::before{content:"";position:absolute;inset:-40px;background:var(--bg) center/cover no-repeat;filter:blur(26px) brightness(0.55) saturate(1.3);z-index:0;}
+.collab-slider .collab-poster-img{position:relative;z-index:1;filter:drop-shadow(0 0 22px rgba(0,0,0,0.6));}
+.collab-slider{height:auto;}
+.collab-slide{position:relative;inset:auto;}
+.collab-slider .collab-poster-img{height:auto;max-height:calc(85vh - 190px);object-fit:contain;}
 .hero-eyebrow{
   font-size:9px;letter-spacing:0.7em;color:var(--gold);text-transform:uppercase;
   margin-bottom:24px;opacity:0;animation:fade-up 1s ease 0.2s forwards;
@@ -2716,34 +2749,40 @@ footer{padding:40px;border-top:0.5px solid rgba(200,168,75,0.1);display:flex;ali
   <div id="lightbox-caption"></div>
 </div>
 
-<!-- COLLABORATION ANNOUNCEMENT MODAL -->
+<!-- EVENT ANNOUNCEMENT MODAL -->
 <div id="collab-modal" role="dialog" aria-modal="true" aria-labelledby="collab-title">
   <div class="collab-card">
     <div class="collab-bracket top-left"></div>
     <div class="collab-bracket top-right"></div>
     <div class="collab-bracket bottom-left"></div>
     <div class="collab-bracket bottom-right"></div>
-    
+
     <div class="collab-header">
       <div class="collab-header-tag" id="collab-title">
         <span class="collab-pulse-dot"></span>
-        <span>// SPECIAL TRANSMISSION</span>
-        <span class="collab-kanji-tag">【特別同盟】</span>
+        <span>// LIVE EVENT · TICKETS OPEN</span>
+        <span class="collab-kanji-tag">【特別開催】</span>
       </div>
       <button class="collab-close-btn" onclick="closeCollabModal()" aria-label="Close Announcement">✕</button>
     </div>
-    
-    <div class="collab-image-box">
-      <img class="collab-poster-img" src="images/collaboration_poster.jpeg" alt="Mad Sensei Studios × Arthashakti Collaboration Poster - The Sensei Show">
+
+    <!-- Two posters, auto-rotating. Both link to the NEAC tickets page -->
+    <div class="collab-image-box collab-slider">
+      <a class="collab-slide active" style="--bg:url('images/event_poster.png')" href="https://vocational-pink-9xba1chv.edgeone.dev/?utm_source=ig&amp;utm_medium=social&amp;utm_content=link_in_bio&amp;fbclid=PAb21jcAU9oIBleHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp-QNtYn-dhIPPt0XSvAYmhvJG3BYApZJvDf0nPih-KiBtjSzoyurEMWx8XiQ_aem_APZKqB9TIUI4_GBxlIzghQ#neac-guwahati" target="_blank" rel="noopener noreferrer" aria-label="Get NEAC 2026 tickets">
+        <img class="collab-poster-img" src="images/event_poster.png" alt="NEAC 2026 - North East Anime Convention poster">
+      </a>
       <div class="collab-image-sheen"></div>
       <div class="collab-scanlines"></div>
     </div>
-    
+
     <div class="collab-footer">
       <div class="collab-caption">
-        <span>MAD SENSEI × ARTHASHAKTI</span> &nbsp;·&nbsp; THE SENSEI SHOW
+        <span>NEAC 2026</span> &nbsp;·&nbsp; 24–25 OCT 2026 &nbsp;·&nbsp; GUWAHATI, ASSAM
       </div>
-      <button class="collab-action-btn" onclick="closeCollabModal()">ENTER REALM ✦ [✕]</button>
+      <div class="collab-btn-group">
+        <a class="collab-action-btn collab-book-btn" id="event-book-btn" href="https://vocational-pink-9xba1chv.edgeone.dev/?utm_source=ig&amp;utm_medium=social&amp;utm_content=link_in_bio&amp;fbclid=PAb21jcAU9oIBleHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp-QNtYn-dhIPPt0XSvAYmhvJG3BYApZJvDf0nPih-KiBtjSzoyurEMWx8XiQ_aem_APZKqB9TIUI4_GBxlIzghQ#neac-guwahati" target="_blank" rel="noopener noreferrer">GET TICKETS ✦ &#8599;</a>
+        <button class="collab-skip-btn" onclick="closeCollabModal()">Skip</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2850,6 +2889,7 @@ footer{padding:40px;border-top:0.5px solid rgba(200,168,75,0.1);display:flex;ali
   <ul class="nav-links" id="nav-links">
     <li><a href="#about">Studio</a></li>
     <li><a href="#maya-sabha">Legacy</a></li>
+    <li><a href="events.html">Events</a></li>
     <li><a href="#register">Register</a></li>
     <li><a href="#verticals">Verticals</a></li>
     <li><a href="#omniverse">Universe</a></li>
@@ -3141,61 +3181,6 @@ footer{padding:40px;border-top:0.5px solid rgba(200,168,75,0.1);display:flex;ali
       </div>
 
     </div>
-
-
-    <!-- COLLABORATOR 02 -->
-    <div class="omni-collab-card">
-
-      <span class="omni-collab-corner tl"></span>
-      <span class="omni-collab-corner tr"></span>
-      <span class="omni-collab-corner bl"></span>
-      <span class="omni-collab-corner br"></span>
-
-      <div class="omni-collab-photo">
-        <div class="omni-collab-scan"></div>
-
-        <img
-          src="images/mohandas-pai.jpg"
-          alt="T. V. Mohandas Pai"
-        >
-      </div>
-
-
-      <div class="omni-collab-info">
-
-        <div class="omni-collab-eyebrow">
-          <span class="omni-collab-dot"></span>
-          Featured Collaborator · 002
-        </div>
-
-        <div class="omni-collab-title">
-          T. V. Mohandas Pai
-        </div>
-
-        <div class="omni-collab-role">
-          Padma Shri Awardee · Chairman, Manipal Global Education
-        </div>
-
-        <div class="omni-collab-quote">
-          Former Infosys director and CFO, entrepreneur,
-          investor and advocate for education and skilled
-          manpower.
-        </div>
-
-        <div class="omni-collab-meta">
-          <span class="omni-collab-status">
-            COLLABORATION · ACTIVE
-          </span>
-
-          <span class="omni-collab-action">
-            OMNIVERSE // 002
-          </span>
-        </div>
-
-      </div>
-
-    </div>
-
   </div>
 </div>
   <div class="omni-wrap">
