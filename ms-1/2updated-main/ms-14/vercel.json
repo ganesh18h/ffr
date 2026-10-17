@@ -1,6 +1,8 @@
 {
   "rewrites": [
-    { "source": "/sitemap", "destination": "/sitemap.xml" },
-    { "source": "/events", "destination": "/events.html" }
+    {
+      "source": "/sitemap",
+      "destination": "/sitemap.xml"
+    }
   ]
-} 
+}
